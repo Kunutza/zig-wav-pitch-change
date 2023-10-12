@@ -87,9 +87,14 @@ const Wav = struct {
 
     const Self = @This();
 
-    RIFF_ChunkDescriptor: []u8,
-    fmt_SubChunk: []u8,
-    data_SubChunk: []u8,
+    // I should make a way to use less memory later on by reading the first two chunks serialy and then
+    // storing the rest (data_SubChunk) in a pointer
+    // 12 bytes
+    RIFF_ChunkDescriptor,
+    // 24 bytes minimum, 280 bytes maximum. And maybe 2 ExtraParamSize, if PCM then doesn't exist. X ExtraParams space for extra parameters
+    fmt_SubChunk,
+    // 8 bytes and data bytes
+    data_SubChunk,
 };
 
 pub fn main() !void {
